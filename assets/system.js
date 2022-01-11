@@ -84,6 +84,8 @@ const createChapters = (chapters, locations, defaultZoom) => {
                 bearing: chapter.bearing || 0,
                 pitch: chapter.pitch || PITCH
             };
+        } else if (chapter.location) {
+            return locations[chapter.location]
         }
         return null;
     };
