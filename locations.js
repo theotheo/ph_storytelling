@@ -52,5 +52,11 @@ export const LOCATIONS = {
         zoom: 10.46,
         pitch: 45.00,
         bearing: 0.00
+    },
+    'Англия': {
+        center: [-0.85344, 51.57658],
+        zoom: 8.00,
+        pitch: 45.00,
+        bearing: 0.00
     }
 }
