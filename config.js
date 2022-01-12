@@ -1,8 +1,8 @@
 var config = {
     // style: 'mapbox://styles/mapbox/minimo-v11',
     // style: 'mapbox://styles/mapbox/streets-v11',
-    style: 'mapbox://styles/iiii/cky6q4v8e06hk14oa99oxf4rq',
-    // style: 'mapbox://styles/iiii/cky2p5mgi4nsb14rur36yq7jd',
+    // style: 'mapbox://styles/iiii/cky6q4v8e06hk14oa99oxf4rq',
+    style: 'mapbox://styles/iiii/cky2p5mgi4nsb14rur36yq7jd',
     accessToken: 'pk.eyJ1IjoiaWlpaSIsImEiOiJja3kyZHRyZG8wa2o3Mm9xdGc4Y2YzdGNzIn0.5Y696p3UEMySCyrrfjmY2g',
     showMarkers: false,
     markerColor: '#3FB1CE',
