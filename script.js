@@ -15,7 +15,7 @@ showMap(config);
 
 
 const pointToRect = (x, y) => {
-    const d = 0.002
+    const d = 0.2
     return [
         [x - d, y + d],
         [x + d, y + d],
@@ -28,40 +28,44 @@ const coords = pointToRect(...[16.37983, 48.22019])
 
 
 const createLayer = (name) => {
-    window.map.addSource(name, {
+    console.log(name)
+    map.addSource(name, {
         'type': 'image',
         'url': `./heroes/${name}.png`,
         'coordinates': coords
     });
-    window.map.addLayer({
+    map.addLayer({
         id: `${name}-layer`,
         'type': 'raster',
         'source': name,
         'paint': {
             'raster-fade-duration': 0,
-            'raster-opacity': 100
+            'raster-opacity': 0
         },
+        'maxzoom': 7.5
     });
 }
 
-const heroes = ['кун.png',
-    'милль.png',
-    'лакатос.png',
-    'витгништейн.png',
-    'нейрат.png',
-    'спенсер.png',
-    'рассел.png',
-    'авенариус.png',
-    'фейрабенд.png',
-    'поппер.png',
-    'конт.png',
-    'мах.png',
-    'пуанкаре.png',
-    'уайтхед.png',
-    'шлик.png',
-    'карнапп.png',
+const heroes = ['Кун.png',
+    'Милль.png',
+    'Лакатос.png',
+    'Витгенштейн.png',
+    'Нейрат.png',
+    'Спенсер.png',
+    'Рассел.png',
+    'Авенариус.png',
+    'Фейрабенд.png',
+    'Поппер.png',
+    'Конт.png',
+    'Мах.png',
+    'Пуанкаре.png',
+    'Уайтхед.png',
+    'Шлик.png',
+    'Карнап.png',
 ]
 
-heroes.forEach(fn => {
-    createLayer(fn.split('.')[0])
+map.on('style.load', () => {
+    heroes.forEach(fn => {
+        createLayer(fn.split('.')[0])
+    })
 })
