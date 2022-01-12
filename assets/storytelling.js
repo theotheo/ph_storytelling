@@ -21,6 +21,7 @@ function getLayerPaintType(layer) {
 }
 
 function setLayerOpacity(layer) {
+    console.log(layer)
     const paintProps = getLayerPaintType(layer.layer);
     paintProps.forEach(function(prop) {
         const options = {};
@@ -168,8 +169,18 @@ export function showMap(config) {
     }
     // instantiate the scrollama
     const scroller = scrollama();
-    const pointToRect = (x, y) => {
-            const d = 0.002
+    const pointToRect = (x, y, zoom) => {
+            let d;
+            if (zoom < 3) {
+                d = 5
+            } else if (zoom < 7) {
+                d = 2
+            } else if (zoom < 10) {
+                d = 0.05
+            } else {
+                d = 0.02
+            }
+
             return [
                 [x - d, y + d],
                 [x + d, y + d],
@@ -191,11 +202,16 @@ export function showMap(config) {
             if (config.showMarkers) {
                 marker.setLngLat(chapter.location.center);
             }
+            console.log(chapter)
+
             if (chapter.onChapterEnter.length > 0) {
                 chapter.onChapterEnter.forEach(setLayerOpacity);
             }
             if (chapter.callback) {
                 chapter.callback();
+            }
+            if (chapter.year) {
+                document.querySelector('#year').innerHTML = chapter.year
             }
             if (chapter.heroes) {
                 console.log('heroes')
@@ -203,7 +219,8 @@ export function showMap(config) {
                     console.log(h)
                         // const point = [h.point[0] + jitter(0.120, 0.0200), h.point[1] + jitter(0.120, 0.0200)]
                     const mySource = map.getSource(h.name);
-                    mySource.setCoordinates(pointToRect(...h.point))
+
+                    mySource.setCoordinates(pointToRect(h.point[0], h.point[1], chapter.location.zoom))
 
                     if (h.opacity) {
                         map.setPaintProperty(
@@ -225,9 +242,38 @@ export function showMap(config) {
                     });
                 });
             }
-            if (chapter.year) {
-                document.querySelector('#year').innerHTML = chapter.year
+            if (chapter.lines) {
+                console.log('lines')
+                chapter.lines.forEach((line, index) => {
+                    console.log(line)
+
+                    map.addSource(`lines-${index}`, {
+                        'type': 'geojson',
+                        'data': {
+                            'type': 'Feature',
+                            'properties': {
+                                'color': line.color
+                            },
+                            'geometry': {
+                                'type': 'LineString',
+                                'coordinates': line.coords
+                            },
+                        }
+                    });
+                    map.addLayer({
+                        'id': `lines-${index}-layer`,
+                        'type': 'line',
+                        'source': `lines-${index}`,
+                        'paint': {
+                            'line-width': 10,
+                            // Use a get expression (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-get)
+                            // to set the line-color to a feature property value.
+                            'line-color': ['get', 'color']
+                        }
+                    });
+                })
             }
+
         })
         .onStepExit(response => {
             const chapter = config.chapters.find(chap => chap.id === response.element.id);

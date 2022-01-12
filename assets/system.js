@@ -35,7 +35,7 @@ const init = () => {
     addStyleSheet("./assets/style.css");
     addScript("https://api.tiles.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js");
     addScript("https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js");
-    addScript("https://unpkg.com/scrollama");
+    // addScript("https://unpkg.com/scrollama");
 
     const map = document.createElement("div");
     map.id = "map";
@@ -48,7 +48,7 @@ const init = () => {
 init();
 
 const ALIGNMENT = 'right';
-const ROTATE = true;
+const ROTATE = false;
 const PITCH = 60.0;
 
 const DEFAULT = 6.65 / 47.61065 / 14.35969 / 10.40 / 60.00
@@ -107,7 +107,31 @@ const createChapters = (chapters, locations, defaultZoom) => {
             chapter.onChapterEnter = JSON.parse(chapter.onChapterEnter);
         }
         if (chapter.heroes) {
-            chapter.heroes = JSON.parse(chapter.heroes)
+            console.log(chapter.heroes)
+            let heroes = JSON.parse(chapter.heroes)
+            heroes.forEach((hero) => {
+                if (typeof hero.point === 'string') {
+                    const point = locations[hero.point].center
+                        // const point2 = locations[line.coords[1]].center
+                    hero.point = point
+                }
+            })
+            chapter.heroes = heroes;
+            console.log(chapter.heroes)
+        }
+        if (chapter.lines) {
+            let lines = JSON.parse(chapter.lines)
+
+            lines.forEach((line) => {
+                if (typeof line.coords[0] === 'string') {
+                    const point1 = locations[line.coords[0]].center
+                    const point2 = locations[line.coords[1]].center
+                    line.coords = [point1, point2]
+                }
+            })
+            chapter.lines = lines;
+            console.log(chapter.lines)
+
         }
         chapter.onChapterExit = [];
         chapter.location = makeLocation(chapter, defaultZoom);
