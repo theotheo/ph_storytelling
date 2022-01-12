@@ -88,5 +88,23 @@ export const LOCATIONS = {
         zoom: 12.84,
         pitch: 45.00,
         bearing: -40.00
+    },
+    "Милль": {
+        center: [-0.09951, 51.52752],
+        zoom: 10.01,
+        pitch: 45.00,
+        bearing: 0.00
+    },
+    "Спенсер": {
+        center: [-0.88029, 52.23959],
+        zoom: 10.34,
+        pitch: 45.00,
+        bearing: 0.00
+    },
+    "Авенариус": {
+        center: [14.21217, 47.56512],
+        zoom: 10.02,
+        pitch: 45.00,
+        bearing: 0.00
     }
 }
