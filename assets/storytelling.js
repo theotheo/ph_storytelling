@@ -169,12 +169,23 @@ export function showMap(config) {
     }
     // instantiate the scrollama
     const scroller = scrollama();
+
+
+    const jitter = (min, max) => {
+        return parseFloat((Math.random() * (max - min) + min).toFixed(4), 4)
+    }
+
     const pointToRect = (x, y, zoom) => {
+            // x = x + jitter(0.50, 0.200)
+            // console.log(x)
+            // y = y + jitter(0.50, 0.200)
+
+
             let d;
             if (zoom < 3) {
-                d = 5
+                d = 3
             } else if (zoom < 7) {
-                d = 2
+                d = 1
             } else if (zoom < 10) {
                 d = 0.05
             } else {
