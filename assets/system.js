@@ -97,7 +97,10 @@ const createChapters = (chapters, locations, defaultZoom) => {
             chapter.alignment = ALIGNMENT;
         }
         chapter.callback = null;
-        chapter.hidden = false;
+        // chapter.hidden = false;
+        if (chapter.hidden) {
+            chapter.hidden = chapter.hidden
+        }
         // chapter.mapAnimation = 'flyTo';
         chapter.rotateAnimation = ROTATE;
         if (chapter.onChapterEnter) {
