@@ -106,5 +106,11 @@ export const LOCATIONS = {
         zoom: 10.02,
         pitch: 45.00,
         bearing: 0.00
+    },
+    "Москва": {
+        center: [37.38517, 55.58368],
+        zoom: 8.25,
+        pitch: 45.00,
+        bearing: 0.00
     }
 }
